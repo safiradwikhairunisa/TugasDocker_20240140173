@@ -1,10 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - MY Website 20240140XXX</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+<div class="container">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">MY Website <span class="nim-badge">20240140XXX</span></h1>
+            <p class="page-subtitle">Selamat datang di aplikasi! 👋</p>
+        </div>
+        <a th:href="@{/logout}" class="btn btn-outline">Logout</a>
+    </div>
 
+    <div class="card">
+        <div class="card-header">
+            <h2>Data Mahasiswa</h2>
+            <a th:href="@{/form}" class="btn btn-primary">+ Input Data Mahasiswa</a>
+        </div>
+
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>NIM</th>
+                    <th>Jenis Kelamin</th>
+                    <th>Email</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(mahasiswaList)}">
+                    <td colspan="5" class="empty-state">
+                        <div class="empty-icon">📭</div>
+                        <div>Belum ada data</div>
+                    </td>
+                </tr>
+                <tr th:each="mhs, iter : ${mahasiswaList}">
+                    <td th:text="${iter.count}" class="center"></td>
+                    <td th:text="${mhs.nama}"></td>
+                    <td th:text="${mhs.nim}" class="nim-cell"></td>
+                    <td>
+                                <span th:text="${mhs.jenisKelamin}"
+                                      th:class="${mhs.jenisKelamin == 'Laki-laki'} ? 'badge badge-blue' : 'badge badge-pink'">
+                                </span>
+                    </td>
+                    <td th:text="${mhs.email}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        ⚠️ Data bersifat <b>temporary</b> — tidak disimpan di database. Data akan hilang saat server di-restart.
+    </div>
+</div>
 </body>
 </html>

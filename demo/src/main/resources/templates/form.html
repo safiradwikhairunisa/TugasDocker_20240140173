@@ -1,10 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Input - MY Website</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+<div class="container container-sm">
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Form Input Mahasiswa</h1>
+            <p class="page-subtitle">Tambah data mahasiswa baru</p>
+        </div>
+    </div>
 
+    <div class="card">
+        <form th:action="@{/form}" th:object="${user}" method="post" class="input-form">
+
+            <div class="form-group">
+                <label for="nama">Nama Lengkap <span class="required">*</span></label>
+                <input type="text" id="nama" th:field="*{nama}"
+                       placeholder="Masukkan nama lengkap" required>
+            </div>
+
+            <div class="form-group">
+                <label for="nim">NIM <span class="required">*</span></label>
+                <input type="text" id="nim" th:field="*{nim}"
+                       placeholder="Contoh: 20240140001" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" th:field="*{email}"
+                       placeholder="Contoh: mahasiswa@email.com">
+            </div>
+
+            <div class="form-group">
+                <label>Jenis Kelamin <span class="required">*</span></label>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" th:field="*{jenisKelamin}" value="Laki-laki" required>
+                        <span class="radio-custom"></span>
+                        <span>Laki-laki</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" th:field="*{jenisKelamin}" value="Perempuan">
+                        <span class="radio-custom"></span>
+                        <span>Perempuan</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    ✓ Submit
+                </button>
+                <a th:href="@{/home}" class="btn btn-outline">
+                    ← Kembali ke Home
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer-note">
+        Dibuat oleh: <b>NIM 20240140XXX</b>
+    </div>
+</div>
 </body>
 </html>
