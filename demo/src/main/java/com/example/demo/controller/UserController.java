@@ -1,19 +1,25 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class UserController {
-    public final String USERNAME = "admin";
-    public final String PASSWORD = "20240140173";
+    private final String USERNAME = "admin";
+    private final String PASSWORD = "20240140173";
+
+    private List<User> users = new ArrayList<>();
 
     @GetMapping("/")
-    public String login() {
-        return  "login";
+    public String loginpage() {
+        return "login";
     }
 
     @PostMapping("/login")
@@ -21,16 +27,32 @@ public class UserController {
                         @RequestParam String password,
                         Model model) {
         if (USERNAME.equals(username) && PASSWORD.equals(password)) {
+            model.addAttribute("users", users);
             return "home";
         } else {
-            model.addAttribute("error",
-                    "Invalid username or password");
+            model.addAttribute("error", "Invalid username or password");
             return "login";
         }
     }
+
     @GetMapping("/home")
-    public String homepage() {
-        return  "home";
+    public String homepage(Model model) {
+        model.addAttribute("users", users);
+        return "home";
+    }
+
+    @GetMapping("/form")
+    public String formpage() {
+        return "form";
+    }
+
+    @PostMapping("/form")
+    public String submitForm(@RequestParam String nama,
+                             @RequestParam String nim,
+                             @RequestParam String jenisKelamin,
+                             Model model) {
+        users.add(new User(nama, nim, jenisKelamin));
+        model.addAttribute("users", users);
+        return "home";
     }
 }
-
