@@ -3,62 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - MY Website 20240140XXX</title>
+    <title>Home</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <div class="container">
-    <div class="page-header">
-        <div>
-            <h1 class="page-title">MY Website <span class="nim-badge">20240140XXX</span></h1>
-            <p class="page-subtitle">Selamat datang di aplikasi! 👋</p>
-        </div>
-        <a th:href="@{/logout}" class="btn btn-outline">Logout</a>
-    </div>
+    <h1>MY Website 20240140XXX</h1>
+    <p>Selamat datang di aplikasi!</p>
+    <a th:href="@{/form}">+ Input Data Mahasiswa</a>
 
-    <div class="card">
-        <div class="card-header">
-            <h2>Data Mahasiswa</h2>
-            <a th:href="@{/form}" class="btn btn-primary">+ Input Data Mahasiswa</a>
-        </div>
+    <h2>Data Mahasiswa</h2>
+    <table class="data-table">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>NIM</th>
+            <th>Jenis Kelamin</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${#lists.isEmpty(mahasiswaList)}">
+            <td colspan="5">Belum ada data</td>
+        </tr>
+        <tr th:each="mhs, iter : ${mahasiswaList}">
+            <td th:text="${iter.count}"></td>
+            <td th:text="${mhs.nama}"></td>
+            <td th:text="${mhs.nim}"></td>
+            <td th:text="${mhs.jenisKelamin}"></td>
+            <td th:text="${mhs.email}"></td>
+        </tr>
+        </tbody>
+    </table>
 
-        <div class="table-wrapper">
-            <table class="data-table">
-                <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>NIM</th>
-                    <th>Jenis Kelamin</th>
-                    <th>Email</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:if="${#lists.isEmpty(mahasiswaList)}">
-                    <td colspan="5" class="empty-state">
-                        <div class="empty-icon">📭</div>
-                        <div>Belum ada data</div>
-                    </td>
-                </tr>
-                <tr th:each="mhs, iter : ${mahasiswaList}">
-                    <td th:text="${iter.count}" class="center"></td>
-                    <td th:text="${mhs.nama}"></td>
-                    <td th:text="${mhs.nim}" class="nim-cell"></td>
-                    <td>
-                                <span th:text="${mhs.jenisKelamin}"
-                                      th:class="${mhs.jenisKelamin == 'Laki-laki'} ? 'badge badge-blue' : 'badge badge-pink'">
-                                </span>
-                    </td>
-                    <td th:text="${mhs.email}"></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="footer-note">
-        ⚠️ Data bersifat <b>temporary</b> — tidak disimpan di database. Data akan hilang saat server di-restart.
-    </div>
+    <a th:href="@{/logout}">Logout</a>
 </div>
 </body>
 </html>
